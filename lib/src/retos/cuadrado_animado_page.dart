@@ -23,6 +23,9 @@ class _CuadradoAnimadoState extends State<_CuadradoAnimado> with SingleTickerPro
 
   late AnimationController controller;
   late Animation moverDerecha;
+  late Animation moverArriba;
+  late Animation moverIzquierda;
+  late Animation moverAbajo;
   //animaciones
 
   @override
@@ -39,7 +42,37 @@ class _CuadradoAnimadoState extends State<_CuadradoAnimado> with SingleTickerPro
         curve: const Interval(
           0.0, 
           0.25, 
-          curve: Curves.bounceIn
+          curve: Curves.bounceOut
+        )
+      )
+    );
+    moverArriba = Tween(begin: 0.0, end: 100.0).animate(
+      CurvedAnimation(
+        parent: controller, 
+        curve: const Interval(
+          0.25, 
+          0.5, 
+          curve: Curves.bounceOut
+        )
+      )
+    );
+    moverIzquierda = Tween(begin: 0.0, end: 100.0).animate(
+      CurvedAnimation(
+        parent: controller, 
+        curve: const Interval(
+          0.5, 
+          0.75, 
+          curve: Curves.bounceOut
+        )
+      )
+    );
+    moverAbajo = Tween(begin: 0.0, end: 100.0).animate(
+      CurvedAnimation(
+        parent: controller, 
+        curve: const Interval(
+          0.75, 
+          1.0, 
+          curve: Curves.bounceOut
         )
       )
     );
@@ -69,16 +102,16 @@ class _CuadradoAnimadoState extends State<_CuadradoAnimado> with SingleTickerPro
 
     return AnimatedBuilder(
       animation: controller, 
-      child: _CuadradoAnimado(),
+      child: _Rectangulo(),
       builder: (BuildContext context, Widget? childCuadrado){
         return Transform.translate(
           offset: Offset(moverDerecha.value, 0),
           child: Transform.translate(
-            offset: Offset(0, moverDerecha.value * -1),
+            offset: Offset(0, moverArriba.value * -1),
             child: Transform.translate(
-              offset: Offset(moverDerecha.value * -1, 0),
+              offset: Offset(moverIzquierda.value * -1, 0),
               child: Transform.translate(
-                offset: Offset(0, moverDerecha.value),
+                offset: Offset(0, moverAbajo.value),
                 child: childCuadrado,
               ),
             ),
